@@ -17,9 +17,9 @@ Pagina web : https://
 - ViteJs
 
 ## Detalles de la app:
-- Para agregar productos, editarlos o eliminarlos hay que autenticarse.
-- Solo el administrador puede editar y eliminar los productos del menu.
-- Un usuario comun solo puede agreagar productos.
+- Las notas se guardan solas cuando se saca el foco de la nota esccrita.
+- Cada cambio en la nota se guarda automaticamente cuando la nota pierde el foco.
+- Se puede compartir notas sin abrir la sesion del usuario, o en la pestaña Notas         Compartidas.
 
 ## Demo
 <p>video demostracion de la app</p>
