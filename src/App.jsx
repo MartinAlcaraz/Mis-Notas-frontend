@@ -53,7 +53,7 @@ function App() {
 
   const allRoutes = (
     <Routes>
-      <Route path='/' element={user.isLogged ? <Navigate to="/dashboard" replace/> : <Main user={user} />  }/>
+      <Route path='/Mis-Notas-frontend/' element={user.isLogged ? <Navigate to="/dashboard" replace/> : <Main user={user} />  }/>
 
       {/* <Route path='/search' element={<Search />} /> */}
 
