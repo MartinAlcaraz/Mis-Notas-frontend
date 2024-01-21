@@ -6,7 +6,7 @@ import mkcert from 'vite-plugin-mkcert'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), mkcert()],
-  base: "/Mis-Notas-frontend/",  // para gh-pages
+  // base: "/Mis-Notas-frontend/",  // para gh-pages
   build: {
     outDir: 'dist'
   }
