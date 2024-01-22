@@ -3,7 +3,6 @@ import { Button, Card, Typography } from "@material-tailwind/react";
 import Modal from "./Modal";
 
 const ModalMessage = ({ open, warning = false, title, message, handleAccept, handleClose }) => {
-
     return (
         <Modal isOpen={open} showClose={true} close={handleClose} >
             <div className="m-auto w-3/4 mt-[20%] md:mt-[10%]">

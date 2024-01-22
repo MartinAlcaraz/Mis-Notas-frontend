@@ -70,14 +70,6 @@
   height: auto;
 }
 
-.delete{
-  display: none;
-}
-
-.card:hover .delete{
-  display: block;
-}
-
 .image-delete:hover{
   transform: scale(1.1);
 }
