@@ -24,12 +24,12 @@ function Note({ _id, title, description, color, refreshNotes, cardActive, setCar
     const titleRef = useRef();
     const descriptionRef = useRef();
 
-    useEffect(()=>{
+    useEffect(() => {
         // carga la animacion vanish luego de hacer algun cambio en las notas. Si no la primera vez que carga la pagina en todas las notas se ejecuta el vanish.
-        if (loading){
+        if (loading) {
             setAnimationCheck(animationChechWithVanish);
         }
-    },[loading]);
+    }, [loading]);
 
     if (errorMessage) {
         console.log("errorMessage  n\ ", errorMessage);
@@ -89,45 +89,45 @@ function Note({ _id, title, description, color, refreshNotes, cardActive, setCar
     }
 
     return (
-        <>
+        <Card name="card" id={card._id} ref={cardRef} onClick={e => onClickHandler(e)} onFocus={e => cardOnFocus(e)} onBlur={e => cardOnBlur(e)}
+            className={cardActive ? classCardActive : classCardInactive}
+        >
             <ModalDialog />
 
-            <Card name="card" id={card._id} ref={cardRef} onClick={e => onClickHandler(e)} onFocus={e => cardOnFocus(e)} onBlur={e => cardOnBlur(e)}
-                className={cardActive ? classCardActive : classCardInactive}
-            >
+            {/* div transparente. Evita que se abra el teclado al hacer click en la nota cuando esta inactiva. Cuando esta activa desaparece y permite enfocar los inputs.*/}
+            <div className={`${!cardActive ? "z-10 absolute top-0 left-0 h-full w-full" : ""}`}></div>
 
-                {/* delete button */}
+            {/* delete button */}
+            {
+                cardActive ?
+                    <div className='absolute right-2 top-0'>
+                        <button className='h-4' onClick={() => deleteNote(card._id)}>
+                            <img src={closeIcon2} className='h-2 hover:scale-125 active:scale-90' />
+                        </button>
+                    </div>
+                    :
+                    <></>
+            }
+
+            <input type="text" name='title' ref={titleRef}
+                className="bg-inherit focus:outline-none font-Lora font-bold text-2xl scrollbar-hide pb-2 disabled:bg-inherit"
+                value={card.title} onChange={e => setCard({ ...card, title: e.currentTarget.value })} />
+
+            <textarea name="description" ref={descriptionRef}
+                className="h-full resize-none bg-inherit focus:outline-none font-Lora leading-5 focus:leading-5 text-base focus:text-base overflow-y-hidden focus:overflow-scroll scrollbar-hide disabled:bg-inherit"
+                value={card.description} onChange={e => setCard({ ...card, description: e.currentTarget.value })}
+            />
+            {/* Loading and save icons */}
+            <div className='absolute right-1 w-6 bottom-0 text-2xl text-light-blue-900'>
                 {
-                    cardActive ?
-                        <div className='absolute right-2 top-0'>
-                            <button className='h-4' onClick={() => deleteNote(card._id)}>
-                                <img src={closeIcon2} className='h-2 hover:scale-125 active:scale-90' />
-                            </button>
-                        </div>
+                    loading ?
+                        <span className='load-typing text-inherit'>....</span>
                         :
-                        <></>
+                        <img src={checkIcon} className={animationCheck} />
                 }
+            </div>
 
-                <input type="text" name='title' ref={titleRef}
-                    className="bg-inherit focus:outline-none font-Lora font-bold text-2xl scrollbar-hide pb-2"
-                    value={card.title} onChange={e => setCard({ ...card, title: e.currentTarget.value })} />
-
-                <textarea name="description" ref={descriptionRef}
-                    className="h-full resize-none bg-inherit focus:outline-none font-Lora leading-5 focus:leading-5 text-base focus:text-base overflow-y-hidden focus:overflow-scroll scrollbar-hide"
-                    value={card.description} onChange={e => setCard({ ...card, description: e.currentTarget.value })}
-                />
-                {/* Loading and save icons */}
-                <div className='absolute right-1 w-6 bottom-0 text-2xl text-light-blue-900'>
-                    {
-                        loading ?
-                            <span className='load-typing text-inherit'>....</span>
-                            :
-                            <img src={checkIcon} className={animationCheck}/>
-                    }
-                </div>
-
-            </Card >
-        </>
+        </Card >
     )
 }
 
