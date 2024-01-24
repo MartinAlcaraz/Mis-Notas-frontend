@@ -43,6 +43,7 @@ function Main({ user = null }) {
     useEffect(() => {
         // obtiene las notas publicas
         // sendHttpRequest('/api/notes', "GET", null, getNotesHandler);
+        window.scroll(0,0);
         setCards(defaultCards);
     }, []);
 

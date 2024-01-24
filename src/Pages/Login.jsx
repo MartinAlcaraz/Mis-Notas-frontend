@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import ModalLoading from '../components/ModalLoading';
 import { useForm } from 'react-hook-form';
@@ -15,6 +15,10 @@ const Login = () => {
     const { register, handleSubmit, setError, trigger, formState: { errors } } = useForm({ mode: 'onBlur' }); // mode: 'onBlur' checkea los errores on blur
 
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        window.scrollTo(0,0);
+    },[])
 
     // funcion que recibe las respuesta de la peticion
     function loginHandler(res, data) {
@@ -59,7 +63,7 @@ const Login = () => {
                     Your Email
                 </Typography>
 
-                <Input type="email" size="md" name="email" placeholder="e-mail" autoComplete="on" autoFocus="on"
+                <Input type="email" size="md" name="email" placeholder="e-mail" autoComplete="on" autoFocus={false}
                     className="!border-blue-gray-200  my-4 text-color-white entrada-1"
                     labelProps={{
                         className: "before:content-none after:content-none"

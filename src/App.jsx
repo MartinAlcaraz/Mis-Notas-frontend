@@ -43,14 +43,6 @@ function App() {
     }
   }, [navigator.onLine]);
 
-  const toggleMenu = () => {
-    setShowModalMenu(!showModalMenu);
-  }
-
-  const hideMenu = () => {
-    setShowModalMenu(false);
-  }
-
   const allRoutes = (
     <Routes>
       <Route path='/' element={user.isLogged ? <Navigate to="/dashboard" replace/> : <Main user={user} />  }/>

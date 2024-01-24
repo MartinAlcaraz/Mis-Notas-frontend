@@ -4,7 +4,7 @@ import useFetch from '../Utils/useFetch';
 import ModalLoading from '../components/ModalLoading';
 import { Button, Card, Typography } from '@material-tailwind/react';
 import Note from '../components/Note';
- 
+
 //Returns an integer random number between min (included) and max (included):
 function randomInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -36,6 +36,11 @@ export default function Dashboard({ user = null }) {
         sendHttpRequest('/api/notes', "GET", null, getNotesHandler);
     }
 
+    // scroll top
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+
     useEffect(() => {
         if (user.isLogged) {
             fetchNotes();
@@ -52,8 +57,8 @@ export default function Dashboard({ user = null }) {
     function createNoteHandler(res, data) {
         if (res.status == 201) {
             console.log('Note created.')
-            setCards([...cards, data.data.newNote ]);
-            
+            setCards([...cards, data.data.newNote]);
+
             setCardIdActive(data.data.newNote._id);
         } else {
 
@@ -63,22 +68,7 @@ export default function Dashboard({ user = null }) {
 
     const addNote = () => {
         // const newId = crypto.randomUUID();
-        sendHttpRequest(`/api/notes/`, 'POST',{ title: 'New title', description: "Write something here." }, createNoteHandler);
-    }
-
-    const updateNewNoteId = (newNoteId, title, description) => {
-        // // se actualiza el _id de la nota nueva, que fue primero creada con _id = 'newNote'. Otra opcion seria hacer una solicitud de todas las notas con fetchNotes()
-        // setCards(cards.map(c => {
-        //     if (c._id === 'newNote') {
-        //         return { _id: newNoteId, title: title, description: description };
-        //     }
-        //     return c;
-        // }));
-
-        // if (cardIdActive == null){
-        //     setCardIdActive(newNoteId);
-        // }
-        // fetchNotes();
+        sendHttpRequest(`/api/notes/`, 'POST', { title: 'New title', description: "Write something here." }, createNoteHandler);
     }
 
     function checkNewNote() {
@@ -103,16 +93,17 @@ export default function Dashboard({ user = null }) {
         setCards(aux);
     }
     // console.log(cardActive);
-    const onClickHandler = (e)=> {
+    const onClickHandler = (e) => {
         // console.log(e.currentTarget); // elemento en el que ocurre el evento <main>
         // console.log(e.target); // elemento clickaedo <main> <div> <card>
-        if (e.target == e.currentTarget){
+        if (e.target == e.currentTarget) {
             setCardIdActive(null);
         }
     }
 
     return (
-        <main onClick={ e => onClickHandler(e) } className='bg-primary min-h-[94vh] flex flex-wrap justify-center px-4 py-16 md:py-20 gap-8 md:gap-12 relative'>
+        <main onClick={e => onClickHandler(e)} 
+            className='bg-primary min-h-[94vh] flex flex-wrap justify-center px-4 py-16 md:py-20 gap-10 md:gap-14 relative'>
             {
                 loading ? <ModalLoading /> : <></>
             }
@@ -120,7 +111,7 @@ export default function Dashboard({ user = null }) {
                 cards.map(c => {
                     return <Note
                         _id={c._id} title={c.title} description={c.description} key={c._id}
-                        color={colors[2]} updateNewNoteId={updateNewNoteId} refreshNotes={refreshNotes}
+                        color={colors[2]} refreshNotes={refreshNotes}
                         cardActive={cardIdActive == c._id} setCardIdActive={setCardIdActive}
                     />
                 })

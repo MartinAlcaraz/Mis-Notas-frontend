@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../components/Loading';
 import ModalLoading from '../components/ModalLoading';
@@ -13,6 +13,10 @@ const Register = () => {
     const [errorMessage, loading, sendHttpRequest] = useFetch();
     const navigate = useNavigate();
     const [NotificationDialog, acceptNotificationDialog] = useNotificationDialog()
+
+    useEffect(()=>{
+        window.scrollTo(0,0);
+    },[]);
 
     // funcion que recibe las respuesta de la peticion
     async function registerHandler(res, data) {

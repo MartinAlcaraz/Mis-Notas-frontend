@@ -6,19 +6,30 @@ import closeIcon2 from '../icons/closeIcon2.svg';
 import useModalDialog from '../Utils/useModalDialog';
 import checkIcon from '../icons/checkIcon.svg'
 
-function Note({ _id, title, description, color, updateNewNoteId, refreshNotes, cardActive, setCardIdActive }) {
+function Note({ _id, title, description, color, refreshNotes, cardActive, setCardIdActive }) {
     const [errorMessage, loading, sendHttpRequest] = useFetch();
     const [card, setCard] = useState({ _id, title, description });
     const [prevCard, setPrevCard] = useState({});
     const [ModalDialog, setModalDialog, acceptDialog] = useModalDialog();
 
-    const classCardInactive = `transition duration-300 w-60 h-60 text-gray-900 shadow-black p-4 ${color} relative card`;
-    const classCardActive = `transition scale-125 duration-300 w-60 h-60 text-gray-900 shadow-black p-4 ${color} relative card`;
+    const animationChechWithoutVanish = 'svg-color-blue block opacity-0';   // - vanish
+    const animationChechWithVanish = 'svg-color-blue block vanish opacity-0'; // + navish
+    const [animationCheck, setAnimationCheck] = useState(animationChechWithoutVanish);
+
+    const classCardInactive = `transition duration-300 w-4/5 max-w-[240px] h-60 text-gray-900 shadow-black p-4 ${color} relative card`;
+    const classCardActive = `transition scale-125 duration-300 w-4/5 max-w-[240px] h-60 text-gray-900 shadow-black p-4 ${color} relative card`;
 
     const navigate = useNavigate();
     const cardRef = useRef();
     const titleRef = useRef();
     const descriptionRef = useRef();
+
+    useEffect(()=>{
+        // carga la animacion vanish luego de hacer algun cambio en las notas. Si no la primera vez que carga la pagina en todas las notas se ejecuta el vanish.
+        if (loading){
+            setAnimationCheck(animationChechWithVanish);
+        }
+    },[loading]);
 
     if (errorMessage) {
         console.log("errorMessage  n\ ", errorMessage);
@@ -88,9 +99,9 @@ function Note({ _id, title, description, color, updateNewNoteId, refreshNotes, c
                 {/* delete button */}
                 {
                     cardActive ?
-                        <div className='absolute right-2 top-0 h-2'>
-                            <button className='h-2 p-0 leading-3' onClick={() => deleteNote(card._id)}>
-                                <img src={closeIcon2} className='h-2 image-delete' />
+                        <div className='absolute right-2 top-0'>
+                            <button className='h-4' onClick={() => deleteNote(card._id)}>
+                                <img src={closeIcon2} className='h-2 hover:scale-125 active:scale-90' />
                             </button>
                         </div>
                         :
@@ -105,20 +116,16 @@ function Note({ _id, title, description, color, updateNewNoteId, refreshNotes, c
                     className="h-full resize-none bg-inherit focus:outline-none font-Lora leading-5 focus:leading-5 text-base focus:text-base overflow-y-hidden focus:overflow-scroll scrollbar-hide"
                     value={card.description} onChange={e => setCard({ ...card, description: e.currentTarget.value })}
                 />
-                {/* Loading icon */}
-                <div className='absolute right-1 w-6 bottom-[-2px] text-2xl text-light-blue-900'>
+                {/* Loading and save icons */}
+                <div className='absolute right-1 w-6 bottom-0 text-2xl text-light-blue-900'>
                     {
-                        (_id === 'newNote') ?
-                            <div>
-                                {
-                                    loading ? <span className='load-typing'>....</span> : <></>
-                                }
-                            </div> :
-                            <div>
-                                {loading ? <span className='load-typing'>....</span> : <img src={checkIcon} className='block text-right vanish opacity-0 text-3xl'/>}
-                            </div>
+                        loading ?
+                            <span className='load-typing text-inherit'>....</span>
+                            :
+                            <img src={checkIcon} className={animationCheck}/>
                     }
                 </div>
+
             </Card >
         </>
     )
