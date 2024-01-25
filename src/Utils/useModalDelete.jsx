@@ -3,11 +3,14 @@ import ModalDelete from '../components/ModalDelete';
 
 // utiliza el componente ModalDelete
 // message y keyword forman parte de la pregunta => Esta seguro que quiere eliminar a KEYWORD ?
-const useConfirmDelete = (title, message, keyword) => {
+const useModalDelete = () => {
+
+    const [title, setTitle] = useState("Titulo");
+    const [message, setMessage] = useState("Mensaje");
 
     const [promise, setPromise] = useState(null); // promise == null
 
-    const confirm = () => new Promise((resolve, reject) => {
+    const acceptDelete = () => new Promise((resolve, reject) => {
         setPromise({ resolve });  // promise == Promise .La variable de estado promise se setea como Promise y permite ver el componente <Dialog/>
     });
 
@@ -25,13 +28,19 @@ const useConfirmDelete = (title, message, keyword) => {
         handleClose();
     };
 
-    const ConfirmationDialog = () => (
+    const setModalDelete= ( title, message ) => {
+        setTitle(title);
+        setMessage(message);
+    }
+
+    const ModalDeleteDialog = () => (
         <ModalDelete open = {promise !== null}
-            title = {title} message = {message} keyword={keyword}
+            title = {title} message = {message}
             handleConfirm = {handleConfirm} handleCancel = {handleCancel}
         />
     );
-    return [ConfirmationDialog, confirm];
+    
+    return [ ModalDeleteDialog, setModalDelete, acceptDelete];
 };
 
-export default useConfirmDelete;
+export default useModalDelete;

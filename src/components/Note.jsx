@@ -3,14 +3,14 @@ import { Button, Card, Typography } from '@material-tailwind/react';
 import useFetch from '../Utils/useFetch';
 import { useNavigate } from 'react-router-dom';
 import closeIcon2 from '../icons/closeIcon2.svg';
-import useModalDialog from '../Utils/useModalDialog';
+import useModalDelete from '../Utils/useModalDelete.jsx';
 import checkIcon from '../icons/checkIcon.svg'
 
 function Note({ _id, title, description, color, refreshNotes, cardActive, setCardIdActive }) {
     const [errorMessage, loading, sendHttpRequest] = useFetch();
     const [card, setCard] = useState({ _id, title, description });
     const [prevCard, setPrevCard] = useState({});
-    const [ModalDialog, setModalDialog, acceptDialog] = useModalDialog();
+    const [ModalDeleteDialog, setModalDelete, acceptDelete] = useModalDelete();
 
     const animationChechWithoutVanish = 'svg-color-blue block opacity-0';   // - vanish
     const animationChechWithVanish = 'svg-color-blue block vanish opacity-0'; // + navish
@@ -77,8 +77,8 @@ function Note({ _id, title, description, color, refreshNotes, cardActive, setCar
     }
 
     const deleteNote = async (id) => {
-        setModalDialog('Eliminar nota', 'Desea eliminar esta nota?', false);
-        let accept = await acceptDialog();
+        setModalDelete('Eliminar nota', 'Desea eliminar esta nota?');
+        let accept = await acceptDelete();
         if (accept) {
             sendHttpRequest(`/api/notes/${id}`, 'DELETE', null, deleteNoteHandler);
         }
@@ -92,7 +92,7 @@ function Note({ _id, title, description, color, refreshNotes, cardActive, setCar
         <Card name="card" id={card._id} ref={cardRef} onClick={e => onClickHandler(e)} onFocus={e => cardOnFocus(e)} onBlur={e => cardOnBlur(e)}
             className={cardActive ? classCardActive : classCardInactive}
         >
-            <ModalDialog />
+            <ModalDeleteDialog />
 
             {/* div transparente. Evita que se abra el teclado al hacer click en la nota cuando esta inactiva. Cuando esta activa desaparece y permite enfocar los inputs.*/}
             <div className={`${!cardActive ? "z-10 absolute top-0 left-0 h-full w-full" : ""}`}></div>

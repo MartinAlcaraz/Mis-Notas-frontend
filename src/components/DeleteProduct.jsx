@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import useFetch from '../Utils/useFetch';
 import useModalDialog from '../Utils/useModalDialog';
-import useConfirmDelete from '../Utils/useConfirmDelete';
+import useModalDelete from '../Utils/useModalDelete';
 import ModalLoading from './ModalLoading';
 
 function DeleteProduct({ closeDelete, name, _id, refreshData }) {
@@ -9,7 +9,7 @@ function DeleteProduct({ closeDelete, name, _id, refreshData }) {
     const [errorMessage, loading, sendHttpRequest] = useFetch();
     const [AcceptDialog, setModalDialog, acceptDialog] = useModalDialog();
 
-    const [ConfirmDeleteDialog, confirmDelete] = useConfirmDelete('Eliminar producto', 'Esta seguro que desea eliminar el producto', name); // return a Component and a function
+    const [ConfirmDeleteDialog, confirmDelete] = useModalDelete('Eliminar producto', 'Esta seguro que desea eliminar el producto', name); // return a Component and a function
 
     const handleDelete = async (res, data) => {
         if (res.status == 200) {

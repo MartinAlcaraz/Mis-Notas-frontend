@@ -15,7 +15,6 @@ import ErrorPage from './Pages/ErrorPage';
 import Search from './Pages/Search';
 import AddProduct from './Pages/AddProduct';
 import AddUser from './Pages/AddUser';
-import RemoveUser from './Pages/RemoveUser';
 import NavbarSticky from './components/NavbarSticky';
 import Register from './Pages/Register'
 import MyAccount from './Pages/MyAccount';
