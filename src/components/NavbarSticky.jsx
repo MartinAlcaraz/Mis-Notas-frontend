@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Navbar, MobileNav, Typography, Button, IconButton, Card } from "@material-tailwind/react";
 import { Link, useNavigate, redirect } from "react-router-dom";
 import ModalLoading from "./ModalLoading";
@@ -8,6 +8,7 @@ export default function NavbarSticky({ user, setUnloggedUser }) {
   const [showUserMenu, setShowUserMenu] = React.useState(false);
   const [loading, setLoading] = useState(false);
 
+  // to hide/show navbar in scroll
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true)
 
@@ -44,7 +45,6 @@ export default function NavbarSticky({ user, setUnloggedUser }) {
     if (res) {
       setLoading(false);
     }
-
   }
 
   const navList = (
@@ -72,12 +72,16 @@ export default function NavbarSticky({ user, setUnloggedUser }) {
     </ul>
   );
 
+  // onMouseDown tiene prioridad sobre onBlur() y onBlur() tiene prioridad sobre el evento onClick().
+  // uso onMouseDown para poder ejecutar el link y luego cerrar el menu.
   return (
-    <Navbar onClick={() => openNav ? setOpenNav(false) : null} 
-      className={`fixed ${visible ? 'top-0' : 'top-[-100px]'} transition-top duration-300 z-40 h-max max-w-full rounded-none px-4 py-2 md:px-8 md:py-4`}>
+    <Navbar onBlur={() => setOpenNav(false)}
+      className={`fixed ${visible ? 'top-0' : 'top-[-100px]'} transition-top duration-300 z-40 h-max max-w-full rounded-none px-4 py-2 md:px-8 md:py-4`}
+    >
 
       {loading ? <ModalLoading /> : <></>}
 
+      {/* navbar show in viewport >= 720px */}
       <div className="flex items-center justify-between text-blue-gray-900">
         <Typography className="mr-4 cursor-pointer py-1.5 font-medium">
           <Link to={user.isLogged ? '/dashboard' : '/'}>Mis Notas</Link>
@@ -88,7 +92,7 @@ export default function NavbarSticky({ user, setUnloggedUser }) {
             user.isLogged ?
               <div className="w-8 h-8">
                 <div className="md:hidden text-center bg-blue-700 rounded-full w-full h-full">
-                  <Link to='/myaccount' className="">
+                  <Link to='/myaccount'>
                     <span className="block w-full h-full p-[0.12rem] text-center capitalize text-[0px] first-letter:text-lg font-semibold">{user.username}</span>
                   </Link>
                 </div>
@@ -193,34 +197,39 @@ export default function NavbarSticky({ user, setUnloggedUser }) {
       {/* if mobile this component will show */}
 
       <MobileNav open={openNav}>
-        {navList}
+        <div >
+          {navList}
 
-        <div className="">
-          {
-            user.isLogged ?
-              // show logged user
-              < ul className="border-t-2 border-t-gray-500">
-                <Typography as="li" variant="small" color="blue-gray" className="p-1 pt-2 font-normal">
-                  <Link to="/myaccount" className="flex items-center hover:text-black active:text-blue-700">
-                    Mi cuenta
-                  </Link>
-                </Typography>
-                <Typography as="li" variant="small" color="blue-gray" className="p-1 font-normal">
-                  <Link to="/" onClick={() => logout()} className="flex items-center hover:text-black active:text-blue-700">
-                    Salir
-                  </Link>
-                </Typography>
-              </ul>
-              :
-              <div className="flex items-center gap-x-1">
-                <Button fullWidth variant="text" size="sm" onClick={() => navigate('/login')}>
-                  Log In
-                </Button>
-                <Button fullWidth variant="gradient" size="sm" onClick={() => navigate('/signup')}>
-                  Sign up
-                </Button>
-              </div>
-          }
+          <div className="">
+            {
+              user.isLogged ?
+                // show logged user
+                < ul className="border-t-2 border-t-gray-500">
+                  <Typography as="li" variant="small" color="blue-gray" className="p-1 pt-2 font-normal">
+                    <Link to="/myaccount" className="flex items-center hover:text-black active:text-blue-700"
+                      onMouseDown={() => navigate("/myaccount")} >
+                      Mi cuenta
+                    </Link>
+                  </Typography>
+                  <Typography as="li" variant="small" color="blue-gray" className="p-1 font-normal">
+                    <Link to="/" className="flex items-center hover:text-black active:text-blue-700"
+                      onMouseDown={() => { console.log('salir'); logout(); navigate("/") }}
+                    >
+                      Salir
+                    </Link>
+                  </Typography>
+                </ul>
+                :
+                <div className="flex items-center gap-x-1">
+                  <Button fullWidth variant="text" size="sm" onMouseDown={() => navigate('/login')}>
+                    Log In
+                  </Button>
+                  <Button fullWidth variant="gradient" size="sm" onMouseDown={() => navigate('/signup')}>
+                    Sign up
+                  </Button>
+                </div>
+            }
+          </div>
         </div>
       </MobileNav>
     </Navbar >

@@ -12,7 +12,8 @@ function Modal({ children, isOpen=false, showClose=true, handleCancel }) {
         return null;
     }
 
-    function closeModal() {
+    function closeModal(e) {
+        console.log('modal')
         setAnimacion(claseAnimacionOut);
         setTimeout(() => {
             handleCancel();    // close() setea la variable isOpen en false;
@@ -20,11 +21,11 @@ function Modal({ children, isOpen=false, showClose=true, handleCancel }) {
     }
 
     return createPortal(
-        <div onClick={closeModal} 
+        <div onClick={(e)=> closeModal(e)} 
             className="min-h-[98vh] fixed pt-16 md:pt-20 pb-0 w-full h-full z-50 overflow-y-auto bg-gray-700/50 
                 scrollbar-hide">
             <div className={" " + animacion}>
-                { showClose && <button className="ml-auto block" onClick={closeModal}><CloseIcon className="h-6 w-6 mr-2 text-gray-100" /></button>}
+                { showClose && <button className="ml-auto block" onClick={()=> closeModal()}><CloseIcon className="h-6 w-6 mr-2 text-gray-100" /></button>}
                 {children}
             </div>
         </div>,

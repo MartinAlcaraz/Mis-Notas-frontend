@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Button, Card, Typography } from '@material-tailwind/react';
+import { Card } from '@material-tailwind/react';
 import useFetch from '../Utils/useFetch';
 import { useNavigate } from 'react-router-dom';
 import closeIcon2 from '../icons/closeIcon2.svg';
