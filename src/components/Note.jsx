@@ -11,6 +11,7 @@ function Note({ _id, title, description, color, refreshNotes, cardActive, setCar
     const [card, setCard] = useState({ _id, title, description });
     const [prevCard, setPrevCard] = useState({});
     const [ModalDeleteDialog, setModalDelete, acceptDelete] = useModalDelete();
+    const [cardDeleted, setCardDeleted] = useState(false);
 
     const animationChechWithoutVanish = 'svg-color-blue block opacity-0';   // - vanish
     const animationChechWithVanish = 'svg-color-blue block vanish opacity-0'; // + navish
@@ -37,6 +38,7 @@ function Note({ _id, title, description, color, refreshNotes, cardActive, setCar
     }
 
     const updateNoteHandler = (res, data) => {
+        console.log(data);
         console.log('updated');
     }
 
@@ -64,9 +66,6 @@ function Note({ _id, title, description, color, refreshNotes, cardActive, setCar
     }
 
     function deleteNoteHandler(res, data) {
-        console.log("deleted")
-        console.log(res.status)
-
         if (res.status == 200) {
             // if ok, refresh note list
             refreshNotes(data.data.deletedNote._id);
@@ -80,6 +79,7 @@ function Note({ _id, title, description, color, refreshNotes, cardActive, setCar
         setModalDelete('Eliminar nota', 'Desea eliminar esta nota?');
         let accept = await acceptDelete();
         if (accept) {
+            setCardDeleted(true);
             sendHttpRequest(`/api/notes/${id}`, 'DELETE', null, deleteNoteHandler);
         }
     }
@@ -90,7 +90,8 @@ function Note({ _id, title, description, color, refreshNotes, cardActive, setCar
 
     return (
         <Card name="card" id={card._id} ref={cardRef} onClick={e => onClickHandler(e)} onFocus={e => cardOnFocus(e)} onBlur={e => cardOnBlur(e)}
-            className={cardActive ? classCardActive : classCardInactive}
+            className={`${cardActive ? classCardActive : classCardInactive} ${cardDeleted?' transition scale-0 rotate-180 skew-x-12 odd:translate-x-96 odd:translate-y-40 even:-translate-x-96 even:-translate-y-40 even:-rotate-180 duration-[2000ms]':' '}`}
+            // className={cardActive ? classCardActive : classCardInactive}
         >
             <ModalDeleteDialog />
 
@@ -111,11 +112,13 @@ function Note({ _id, title, description, color, refreshNotes, cardActive, setCar
 
             <input type="text" name='title' ref={titleRef}
                 className="bg-inherit focus:outline-none font-Lora font-bold text-2xl scrollbar-hide pb-2 disabled:bg-inherit"
-                value={card.title} onChange={e => setCard({ ...card, title: e.currentTarget.value })} />
+                value={card.title} onChange={e => setCard({ ...card, title: e.currentTarget.value })} 
+                maxLength={50}/>
 
             <textarea name="description" ref={descriptionRef}
                 className="h-full resize-none bg-inherit focus:outline-none font-Lora leading-5 focus:leading-5 text-base focus:text-base overflow-y-hidden focus:overflow-scroll scrollbar-hide disabled:bg-inherit"
                 value={card.description} onChange={e => setCard({ ...card, description: e.currentTarget.value })}
+                maxLength={2000}
             />
             {/* Loading and save icons */}
             <div className='absolute right-1 w-6 bottom-0 text-2xl text-light-blue-900'>
