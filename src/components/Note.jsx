@@ -6,7 +6,7 @@ import closeIcon2 from '../icons/closeIcon2.svg';
 import useModalDelete from '../Utils/useModalDelete.jsx';
 import checkIcon from '../icons/checkIcon.svg'
 
-function Note({ _id, title, description, color, refreshNotes, cardActive, setCardIdActive }) {
+function Note({ _id, title, description, color, refreshNotes, cardActive, setCardIdActive, notesContainerRef }) {
     const [errorMessage, loading, sendHttpRequest] = useFetch();
     const [card, setCard] = useState({ _id, title, description });
     const [prevCard, setPrevCard] = useState({});
@@ -86,12 +86,16 @@ function Note({ _id, title, description, color, refreshNotes, cardActive, setCar
 
     const onClickHandler = (e) => {
         setCardIdActive(e.currentTarget.id);
+        const y = e.currentTarget.getBoundingClientRect().top + window.scrollY - (window.innerHeight / 4);
+        window.scroll({
+            top: y,
+            behavior: 'smooth'
+        });
     }
 
     return (
         <Card name="card" id={card._id} ref={cardRef} onClick={e => onClickHandler(e)} onFocus={e => cardOnFocus(e)} onBlur={e => cardOnBlur(e)}
-            className={`${cardActive ? classCardActive : classCardInactive} ${cardDeleted?' transition scale-0 rotate-180 skew-x-12 odd:translate-x-96 odd:translate-y-40 even:-translate-x-96 even:-translate-y-40 even:-rotate-180 duration-[2000ms]':' '}`}
-            // className={cardActive ? classCardActive : classCardInactive}
+            className={`${cardActive ? classCardActive : classCardInactive} ${cardDeleted ? ' transition scale-0 rotate-180 skew-x-12 odd:translate-x-96 odd:translate-y-[calc(100% * 2)] even:-translate-x-96 even:-translate-y-40 even:-rotate-180 duration-[2000ms]' : ' '}`}
         >
             <ModalDeleteDialog />
 
@@ -112,8 +116,8 @@ function Note({ _id, title, description, color, refreshNotes, cardActive, setCar
 
             <input type="text" name='title' ref={titleRef}
                 className="bg-inherit focus:outline-none font-Lora font-bold text-2xl scrollbar-hide pb-2 disabled:bg-inherit"
-                value={card.title} onChange={e => setCard({ ...card, title: e.currentTarget.value })} 
-                maxLength={50}/>
+                value={card.title} onChange={e => setCard({ ...card, title: e.currentTarget.value })}
+                maxLength={50} />
 
             <textarea name="description" ref={descriptionRef}
                 className="h-full resize-none bg-inherit focus:outline-none font-Lora leading-5 focus:leading-5 text-base focus:text-base overflow-y-hidden focus:overflow-scroll scrollbar-hide disabled:bg-inherit"

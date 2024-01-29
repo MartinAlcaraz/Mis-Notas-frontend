@@ -23,19 +23,24 @@ export default function NavbarSticky({ user, setUnloggedUser }) {
 
   // to show or hide navbar in scroll
   const handleScroll = () => {
-    const currentScrollPos = window.scrollY;
+    // only hide the navbar when the windows heigth is less than 560 px
+    if (window.innerHeight < 560) {
+      const currentScrollPos = window.scrollY;
 
-    if (currentScrollPos > prevScrollPos) {
-      setVisible(false);
-    } else {
-      setVisible(true)
+      if (currentScrollPos > prevScrollPos) {
+        setVisible(false);
+      } else {
+        setVisible(true);
+      }
+      setPrevScrollPos(currentScrollPos);
+    }else{
+      setVisible(true);
     }
-
-    setPrevScrollPos(currentScrollPos)
   }
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
+
     return () => window.removeEventListener('scroll', handleScroll)
   })
 

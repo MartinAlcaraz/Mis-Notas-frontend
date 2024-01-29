@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useFetch from '../Utils/useFetch';
 import ModalLoading from '../components/ModalLoading';
@@ -23,6 +23,8 @@ export default function Dashboard({ user = null }) {
     const [errorMessage, loading, sendHttpRequest] = useFetch();
     const navigate = useNavigate();
     const [cardIdActive, setCardIdActive] = useState(null);
+
+    const notesContainerRef = useRef();
 
     const getNotesHandler = (res, data) => {
         if (res.status == 200) {
@@ -93,32 +95,35 @@ export default function Dashboard({ user = null }) {
         setCards(aux);
     }
     // console.log(cardActive);
+
     const onClickHandler = (e) => {
+        // setea cardActive en null si se clickea fuera de la nota
         // console.log(e.currentTarget); // elemento en el que ocurre el evento <main>
-        // console.log(e.target); // elemento clickaedo <main> <div> <card>
+        // console.log(e.target); // elemento clickaedo en <main>, <div> o <card>
         if (e.target == e.currentTarget) {
             setCardIdActive(null);
         }
     }
 
     return (
-        <main onClick={e => onClickHandler(e)} 
-            className='bg-primary min-h-[94vh] flex flex-wrap justify-center px-4 py-16 md:py-20 gap-10 md:gap-14 relative'>
-            {
-                loading ? <ModalLoading /> : <></>
-            }
-            {
-                cards.map(c => {
-                    return <Note
-                        _id={c._id} title={c.title} description={c.description} key={c._id}
-                        color={colors[2]} refreshNotes={refreshNotes}
-                        cardActive={cardIdActive == c._id} setCardIdActive={setCardIdActive}
-                    />
-                })
-            }
+        <main className='bg-primary min-h-screen relative pb-2'>
+            <div ref={notesContainerRef} onClick={e => onClickHandler(e)} className='flex flex-wrap justify-center gap-10 md:gap-14 min-h-[100vh] px-4 py-16 md:py-20'>
+                {
+                    loading ? <ModalLoading /> : <></>
+                }
+                {
+                    cards.map(c => {
+                        return <Note
+                            _id={c._id} title={c.title} description={c.description} key={c._id}
+                            color={colors[2]} refreshNotes={refreshNotes} notesContainerRef={notesContainerRef}
+                            cardActive={cardIdActive == c._id} setCardIdActive={setCardIdActive}
+                        />
+                    })
+                }
 
-            <div className='absolute bottom-5 right-5'>
-                <Button disabled={checkNewNote()} onClick={() => addNote()} size='sm' className=' p-1 w-10 h-10 rounded-full text-2xl bg-blue-700 shadow-black'>
+            </div>
+            <div className='sticky left-[85%] bottom-5 text-right inline'>
+                <Button disabled={checkNewNote()} onClick={() => addNote()} size='sm' className='p-1 w-10 h-10 rounded-full text-2xl bg-blue-700 shadow-black'>
                     +
                 </Button>
             </div>
