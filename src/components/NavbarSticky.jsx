@@ -21,6 +21,7 @@ export default function NavbarSticky({ user, setUnloggedUser }) {
     );
   }, []);
 
+  
   // to show or hide navbar in scroll
   const handleScroll = () => {
     // only hide the navbar when the windows heigth is less than 560 px
