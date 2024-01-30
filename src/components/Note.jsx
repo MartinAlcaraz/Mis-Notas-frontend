@@ -6,10 +6,10 @@ import closeIcon2 from '../icons/closeIcon2.svg';
 import useModalDelete from '../Utils/useModalDelete.jsx';
 import checkIcon from '../icons/checkIcon.svg'
 
-function Note({ _id, title, description, color, refreshNotes, cardActive, setCardIdActive, notesContainerRef }) {
+function Note({ _id, title, description, color, refreshNotes, noteActive, setIdNoteActive, scrollToLastNote, setScrollToLastNote }) {
     const [errorMessage, loading, sendHttpRequest] = useFetch();
-    const [card, setCard] = useState({ _id, title, description });
-    const [prevCard, setPrevCard] = useState({});
+    const [note, setNote] = useState({ _id, title, description });
+    const [prevNote, setPrevNote] = useState({});
     const [ModalDeleteDialog, setModalDelete, acceptDelete] = useModalDelete();
     const [cardDeleted, setCardDeleted] = useState(false);
 
@@ -45,7 +45,8 @@ function Note({ _id, title, description, color, refreshNotes, cardActive, setCar
     const cardOnFocus = (e) => {
         // const element = e.target.getAttribute("name")  // title or description. Focus on title or description
         // const content = e.target.value;
-        setPrevCard(card);
+        // set the previous note
+        setPrevNote(note);
     }
 
     const cardOnBlur = (e) => {
@@ -53,12 +54,12 @@ function Note({ _id, title, description, color, refreshNotes, cardActive, setCar
         const newContent = e.target.value;  // title: "new content" || decription: "new content in description"
 
         // compara el elemento que ha sido enfocado: title o description
-        if ((element == 'title' || element == 'description') && prevCard[element] !== newContent) {
+        if ((element == 'title' || element == 'description') && prevNote[element] !== newContent) {
             // save card changes
             console.log(`El ${element} ha cambiado. Guardar cambios.`);
             //update note
             // solo se actualiza el elemento que ha sido modificado. Title o description.
-            sendHttpRequest(`/api/notes/${card._id}`, 'PUT', { [element]: newContent }, updateNoteHandler);
+            sendHttpRequest(`/api/notes/${note._id}`, 'PUT', { [element]: newContent }, updateNoteHandler);
         } else {
             console.log(`El ${element} no cambió.`);
         }
@@ -85,28 +86,31 @@ function Note({ _id, title, description, color, refreshNotes, cardActive, setCar
     }
 
     const onClickHandler = (e) => {
-        setCardIdActive(e.currentTarget.id);
-        const y = e.currentTarget.getBoundingClientRect().top + window.scrollY - (window.innerHeight / 4);
-        window.scroll({
-            top: y,
-            behavior: 'smooth'
-        });
+        // only scroll one time in the same note, to avoid scrolling many times.
+        if (!noteActive) {
+            const y = e.currentTarget.getBoundingClientRect().top + window.scrollY - (window.innerHeight / 4);
+            window.scroll({
+                top: y,
+                behavior: 'smooth'
+            });
+        }
+        setIdNoteActive(e.currentTarget.id);
     }
 
     return (
-        <Card name="card" id={card._id} ref={cardRef} onClick={e => onClickHandler(e)} onFocus={e => cardOnFocus(e)} onBlur={e => cardOnBlur(e)}
-            className={`${cardActive ? classCardActive : classCardInactive} ${cardDeleted ? ' transition scale-0 rotate-180 skew-x-12 odd:translate-x-96 odd:translate-y-[calc(100% * 2)] even:-translate-x-96 even:-translate-y-40 even:-rotate-180 duration-[2000ms]' : ' '}`}
+        <Card name="card" id={note._id} ref={cardRef} onClick={e => onClickHandler(e)} onFocus={e => cardOnFocus(e)} onBlur={e => cardOnBlur(e)}
+            className={`${noteActive ? classCardActive : classCardInactive} ${cardDeleted ? ' transition scale-0 rotate-180 skew-x-12 odd:translate-x-96 odd:translate-y-[calc(100% * 2)] even:-translate-x-96 even:-translate-y-40 even:-rotate-180 duration-[2000ms]' : ' '}`}
         >
             <ModalDeleteDialog />
 
             {/* div transparente. Evita que se abra el teclado al hacer click en la nota cuando esta inactiva. Cuando esta activa desaparece y permite enfocar los inputs.*/}
-            <div className={`${!cardActive ? "z-10 absolute top-0 left-0 h-full w-full" : ""}`}></div>
+            <div className={`${!noteActive ? "z-10 absolute top-0 left-0 h-full w-full" : ""}`}></div>
 
             {/* delete button */}
             {
-                cardActive ?
+                noteActive ?
                     <div className='absolute right-2 top-0'>
-                        <button className='h-4' onClick={() => deleteNote(card._id)}>
+                        <button className='h-4' onClick={() => deleteNote(note._id)}>
                             <img src={closeIcon2} className='h-2 hover:scale-125 active:scale-90' />
                         </button>
                     </div>
@@ -116,12 +120,12 @@ function Note({ _id, title, description, color, refreshNotes, cardActive, setCar
 
             <input type="text" name='title' ref={titleRef}
                 className="bg-inherit focus:outline-none font-Lora font-bold text-2xl scrollbar-hide pb-2 disabled:bg-inherit"
-                value={card.title} onChange={e => setCard({ ...card, title: e.currentTarget.value })}
+                value={note.title} onChange={e => setNote({ ...note, title: e.currentTarget.value })}
                 maxLength={50} />
 
             <textarea name="description" ref={descriptionRef}
                 className="h-full resize-none bg-inherit focus:outline-none font-Lora leading-5 focus:leading-5 text-base focus:text-base overflow-y-hidden focus:overflow-scroll scrollbar-hide disabled:bg-inherit"
-                value={card.description} onChange={e => setCard({ ...card, description: e.currentTarget.value })}
+                value={note.description} onChange={e => setNote({ ...note, description: e.currentTarget.value })}
                 maxLength={2000}
             />
             {/* Loading and save icons */}

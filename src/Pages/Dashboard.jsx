@@ -10,6 +10,7 @@ function randomInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+
 const colors = [
     "bg-blue-700",
     "bg-deep-orange-800",
@@ -19,18 +20,17 @@ const colors = [
 
 export default function Dashboard({ user = null }) {
 
-    const [cards, setCards] = useState([]);
+    const [notes, setNotes] = useState([]);
     const [errorMessage, loading, sendHttpRequest] = useFetch();
     const navigate = useNavigate();
-    const [cardIdActive, setCardIdActive] = useState(null);
-
-    const notesContainerRef = useRef();
+    const [idNoteActive, setIdNoteActive] = useState(null);
+    const [scrollToLastNote, setScrollToLastNote] = useState(false);
 
     const getNotesHandler = (res, data) => {
         if (res.status == 200) {
-            setCards(data.data.notes);
+            setNotes(data.data.notes);
         } else {
-            setCards([]);
+            setNotes([]);
         }
     }
 
@@ -38,7 +38,7 @@ export default function Dashboard({ user = null }) {
         sendHttpRequest('/api/notes', "GET", null, getNotesHandler);
     }
 
-    // scroll top
+    // scroll to top
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [])
@@ -47,9 +47,23 @@ export default function Dashboard({ user = null }) {
         if (user.isLogged) {
             fetchNotes();
         } else {
-            setCards([]);
+            setNotes([]);
         }
     }, [user.isLogged]);
+
+    useEffect(() => {
+        // si se crea una nota nueva se desplaza la pantalla hasta la nota nueva
+        if (scrollToLastNote) {
+            const newNote= document.getElementById(notes[notes.length-1]._id);
+            const y = newNote.getBoundingClientRect().top + window.scrollY - (window.innerHeight / 4);
+            window.scroll({
+                top: y,
+                behavior: 'smooth'
+            });            
+
+            setScrollToLastNote(false);
+        }
+    }, [scrollToLastNote]);
 
     if (errorMessage) {
         console.log("errorMessage \n", errorMessage);
@@ -59,71 +73,64 @@ export default function Dashboard({ user = null }) {
     function createNoteHandler(res, data) {
         if (res.status == 201) {
             console.log('Note created.')
-            setCards([...cards, data.data.newNote]);
+            setNotes(()=> [...notes, data.data.newNote]);
 
-            setCardIdActive(data.data.newNote._id);
+            setIdNoteActive(data.data.newNote._id);
+
+            // cuando termina de re-renderizarse el componente, se desplaza la pantalla hasta la nueva nota.
+            setScrollToLastNote(true);            
+
         } else {
-
             console.log('Failed to create note.')
         }
     }
 
     const addNote = () => {
-        // const newId = crypto.randomUUID();
         sendHttpRequest(`/api/notes/`, 'POST', { title: 'New title', description: "Write something here." }, createNoteHandler);
-    }
-
-    function checkNewNote() {
-        const card = cards[cards.length - 1];
-        // if new card is created, the button will be disabled.
-        if (card && card._id == 'newNote') {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     function refreshNotes(id) {
         // actualiza la lista de notas eliminando la nota con el id eliminado de la BBDD.
         let aux = []
 
-        cards.forEach(c => {
+        notes.forEach(c => {
             if (c._id !== id) {
                 aux.push(c);
             }
         });
-        setCards(aux);
+        setNotes(aux);
     }
-    // console.log(cardActive);
 
     const onClickHandler = (e) => {
-        // setea cardActive en null si se clickea fuera de la nota
         // console.log(e.currentTarget); // elemento en el que ocurre el evento <main>
         // console.log(e.target); // elemento clickaedo en <main>, <div> o <card>
+
+        // setea cardActive en null si se clickea fuera de la nota
         if (e.target == e.currentTarget) {
-            setCardIdActive(null);
+            setIdNoteActive(null);
         }
     }
 
     return (
         <main className='bg-primary min-h-screen relative pb-2'>
-            <div ref={notesContainerRef} onClick={e => onClickHandler(e)} className='flex flex-wrap justify-center gap-10 md:gap-14 min-h-[100vh] px-4 py-16 md:py-20'>
+            <div onClick={e => onClickHandler(e)} className='flex flex-wrap justify-center gap-10 md:gap-14 min-h-[100vh] px-4 py-16 md:py-20'>
                 {
                     loading ? <ModalLoading /> : <></>
                 }
                 {
-                    cards.map(c => {
+                    notes.map(c => {
                         return <Note
                             _id={c._id} title={c.title} description={c.description} key={c._id}
-                            color={colors[2]} refreshNotes={refreshNotes} notesContainerRef={notesContainerRef}
-                            cardActive={cardIdActive == c._id} setCardIdActive={setCardIdActive}
+                            color={colors[2]} refreshNotes={refreshNotes} 
+                            scrollToLastNote={scrollToLastNote} setScrollToLastNote={setScrollToLastNote}
+                            noteActive={idNoteActive == c._id} setIdNoteActive={setIdNoteActive}
                         />
                     })
                 }
 
             </div>
             <div className='sticky left-[85%] bottom-5 text-right inline'>
-                <Button disabled={checkNewNote()} onClick={() => addNote()} size='sm' className='p-1 w-10 h-10 rounded-full text-2xl bg-blue-700 shadow-black'>
+                <Button disabled={loading} onClick={() => addNote()} size='sm' className='p-1 w-10 h-10 rounded-full text-2xl bg-blue-700 shadow-black'>
                     +
                 </Button>
             </div>
