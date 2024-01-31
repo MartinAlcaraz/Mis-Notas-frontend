@@ -99,7 +99,8 @@ function Note({ _id, title, description, color, refreshNotes, noteActive, setIdN
 
     return (
         <Card name="card" id={note._id} ref={cardRef} onClick={e => onClickHandler(e)} onFocus={e => cardOnFocus(e)} onBlur={e => cardOnBlur(e)}
-            className={`${noteActive ? classCardActive : classCardInactive} ${cardDeleted ? ' transition scale-0 rotate-180 skew-x-12 odd:translate-x-96 odd:translate-y-[calc(100% * 2)] even:-translate-x-96 even:-translate-y-40 even:-rotate-180 duration-[2000ms]' : ' '}`}
+            className={`${noteActive ? classCardActive : classCardInactive} 
+             ${cardDeleted ? ` ${(cardRef.current.getBoundingClientRect().x > (window.innerWidth * 0.45)) ? ` scale-0 translate-x-96 rotate-180 duration-[2000ms] ` : ` scale-0 -translate-x-96 -rotate-180 duration-[2000ms] ` } ` : ' '} `}
         >
             <ModalDeleteDialog />
 
