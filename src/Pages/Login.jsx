@@ -40,7 +40,9 @@ const Login = () => {
         // const formData = new FormData();
         // formData.append("email", data.email);
         // formData.append("password", data.password);
+
         const formData = { "email": data.email, "password": data.password };
+
         sendHttpRequest('/api/auth/login', "POST", formData, loginHandler);
     };
 

@@ -50,6 +50,7 @@ export default function NavbarSticky({ user, setUnloggedUser }) {
     const res = await setUnloggedUser();
     if (res) {
       setLoading(false);
+      navigate('/');
     }
   }
 
@@ -128,7 +129,7 @@ export default function NavbarSticky({ user, setUnloggedUser }) {
                           </Link>
                         </Typography>
                         <Typography as="li" variant="small" color="blue-gray" className="p-1 font-normal">
-                          <Link to="/" onClick={() => logout()} className="flex items-center hover:text-black active:text-blue-700">
+                          <Link to="/" onClick={() => logout() } className="flex items-center hover:text-black active:text-blue-700">
                             Salir
                           </Link>
                         </Typography>
@@ -219,7 +220,7 @@ export default function NavbarSticky({ user, setUnloggedUser }) {
                   </Typography>
                   <Typography as="li" variant="small" color="blue-gray" className="p-1 font-normal">
                     <Link to="/" className="flex items-center hover:text-black active:text-blue-700"
-                      onMouseDown={() => { console.log('salir'); logout(); navigate("/") }}
+                      onMouseDown={() => logout() }
                     >
                       Salir
                     </Link>

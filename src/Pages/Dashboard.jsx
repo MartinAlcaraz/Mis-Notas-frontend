@@ -48,6 +48,7 @@ export default function Dashboard({ user = null }) {
             fetchNotes();
         } else {
             setNotes([]);
+            navigate('/');
         }
     }, [user.isLogged]);
 
