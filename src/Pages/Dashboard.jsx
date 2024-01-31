@@ -129,7 +129,8 @@ export default function Dashboard({ user = null }) {
                 }
 
             </div>
-            <div className='sticky left-[85%] bottom-5 text-right inline'>
+            {/* @custom-mq:hidden hide the button if virtual keyboard appears, because the screen height is less than 300px */}
+            <div className='sticky left-[85%] bottom-5 text-right inline @custom-mq:hidden'>
                 <Button disabled={loading} onClick={() => addNote()} size='sm' className='p-1 w-10 h-10 rounded-full text-2xl bg-blue-700 shadow-black'>
                     +
                 </Button>
