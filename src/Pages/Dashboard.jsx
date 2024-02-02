@@ -4,6 +4,7 @@ import useFetch from '../Utils/useFetch';
 import ModalLoading from '../components/ModalLoading';
 import { Button, Card, Typography } from '@material-tailwind/react';
 import Note from '../components/Note';
+import dateformat from 'dateformat';
 
 //Returns an integer random number between min (included) and max (included):
 function randomInteger(min, max) {
@@ -122,7 +123,7 @@ export default function Dashboard({ user = null }) {
                     notes.map(c => {
                         return <Note
                             _id={c._id} title={c.title} description={c.description} key={c._id}
-                            color={colors[2]} refreshNotes={refreshNotes} 
+                            updatedAt={dateformat(c.updatedAt, 'dd/mm/yyyy')} color={colors[2]} refreshNotes={refreshNotes} 
                             scrollToLastNote={scrollToLastNote} setScrollToLastNote={setScrollToLastNote}
                             noteActive={idNoteActive == c._id} setIdNoteActive={setIdNoteActive}
                         />

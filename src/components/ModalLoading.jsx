@@ -10,7 +10,7 @@ const ModalLoading = () => {
     const [animacion, setAnimacion] = useState(claseAnimacionIn);
 
     return createPortal(
-        <div className={"bg-black/50 fixed w-full h-full top-0 left-0 z-50 pt-[30vh] " + animacion}>
+        <div className={"bg-black/50 fixed w-full h-full z-50 pt-[30vh] " + animacion}>
             <div className="m-auto w-3/4">
                 <div >
                     <Loading />

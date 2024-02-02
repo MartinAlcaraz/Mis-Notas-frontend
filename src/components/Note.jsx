@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import closeIcon2 from '../icons/closeIcon2.svg';
 import useModalDelete from '../Utils/useModalDelete.jsx';
 import checkIcon from '../icons/checkIcon.svg'
+import pencil from '../icons/pencil.svg'
 
-function Note({ _id, title, description, color, refreshNotes, noteActive, setIdNoteActive, scrollToLastNote, setScrollToLastNote }) {
+function Note({ _id, title, description, updatedAt, color, refreshNotes, noteActive, setIdNoteActive, scrollToLastNote, setScrollToLastNote }) {
     const [errorMessage, loading, sendHttpRequest] = useFetch();
-    const [note, setNote] = useState({ _id, title, description });
+    const [note, setNote] = useState({ _id, title, description, updatedAt });
     const [prevNote, setPrevNote] = useState({});
     const [ModalDeleteDialog, setModalDelete, acceptDelete] = useModalDelete();
     const [cardDeleted, setCardDeleted] = useState(false);
@@ -97,10 +98,12 @@ function Note({ _id, title, description, color, refreshNotes, noteActive, setIdN
         setIdNoteActive(e.currentTarget.id);
     }
 
+    console.log(note.updatedAt);
+
     return (
         <Card name="card" id={note._id} ref={cardRef} onClick={e => onClickHandler(e)} onFocus={e => cardOnFocus(e)} onBlur={e => cardOnBlur(e)}
             className={`${noteActive ? classCardActive : classCardInactive} 
-             ${cardDeleted ? ` ${(cardRef.current.getBoundingClientRect().x > (window.innerWidth * 0.45)) ? ` scale-0 translate-x-96 rotate-180 duration-[2000ms] ` : ` scale-0 -translate-x-96 -rotate-180 duration-[2000ms] ` } ` : ' '} `}
+             ${cardDeleted ? ` ${(cardRef.current.getBoundingClientRect().x > (window.innerWidth * 0.45)) ? ` scale-0 translate-x-96 rotate-180 duration-[2000ms] ` : ` scale-0 -translate-x-96 -rotate-180 duration-[2000ms] `} ` : ' '} `}
         >
             <ModalDeleteDialog />
 
@@ -116,7 +119,10 @@ function Note({ _id, title, description, color, refreshNotes, noteActive, setIdN
                         </button>
                     </div>
                     :
-                    <></>
+                    <div className='absolute top-0 right-4 h-3'>
+                        <span className='inline-block  h-3 text-xs'>{note.updatedAt}</span>
+                        <img className='inline-block w-4 h-[14px]' src={pencil} alt="edited" />
+                    </div>
             }
 
             <input type="text" name='title' ref={titleRef}

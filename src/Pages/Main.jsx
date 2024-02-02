@@ -32,14 +32,6 @@ function Main({ user = null }) {
     const [errorMessage, loading, sendHttpRequest] = useFetch();
     const navigate = useNavigate();
 
-    const getNotesHandler = (res, data) => {
-        if (res.status == 200) {
-            setCards(data.data.notes);
-        } else {
-            setCards([]);
-        }
-    }
-
     useEffect(() => {
         // obtiene las notas publicas
         // sendHttpRequest('/api/notes', "GET", null, getNotesHandler);
@@ -51,51 +43,13 @@ function Main({ user = null }) {
         console.log("errorMessage"); console.log(errorMessage);
         navigate('/error');
     }
-
-    const updateNoteHandler = (res, data) => {
-        console.log(res.status)
-        console.log(data)
-    }
-
-    const cardOnFocus = (e) => {
-        const id = e.currentTarget.id;  // card.id
-        const element = e.target.getAttribute("name")  // title or description. Focus on title or description
-        const content = e.target.textContent;
-
-        setCard({ id, element, content });
-    }
-
-    const cardOnBlur = (e) => {
-        const id = e.currentTarget.id;  // card.id
-        const element = e.target.getAttribute("name")  // title or description. Focus on title or description
-        const newContent = e.target.textContent;
-
-        if (card.content !== newContent) {
-            // save card changes
-            console.log(`El ${element} ha cambiado. Guardar cambios.`);
-            let cardAux = {};
-            // solo se guardan los cambios del titulo o de la descripcion.
-            if (element == 'title') {
-                cardAux = { "title": newContent };
-            } else {
-                cardAux = { "description": newContent };
-            }
-
-            console.log(cardAux);
-
-            sendHttpRequest(`/api/notes/${id}`, 'PUT', cardAux, updateNoteHandler);
-
-        } else {
-            console.log(`El ${element} no cambió.`);
-        }
-    }
-
-    console.log("Render Main")
+    
+    // console.log("Render Main")
 
     return (
-        <main className='bg-primary min-h-[94vh] flex flex-wrap justify-center px-4 py-16 md:py-20 gap-8 md:gap-12'>
+        <main className='bg-primary min-h-screen flex flex-wrap justify-center px-4 py-16 md:py-20 gap-8 md:gap-12'>
             {
-                // loading? <ModalLoading/> : <></>
+                loading? <ModalLoading/> : <></>
             }
             {
                 cards.map(c => {
