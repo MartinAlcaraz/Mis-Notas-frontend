@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import ModalMessage from '../components/ModalMessage';
+import  { useState } from 'react';
+import ModalDialog from '../components/ModalDialog.jsx';
 
-// utiliza el componente ModalMessage
-const useModalDialog = () => {
+// utiliza el componente ModalDialog
+const useModalAcceptDialog = () => {
 
     const [title, setTitle] = useState("Titulo");
     const [message, setMessage] = useState("Mensaje");
@@ -22,19 +22,24 @@ const useModalDialog = () => {
         promise?.resolve(true); // promise ejecuta el metodo resolve y devuelve true.
         handleClose();
     };
+    
+    const handleCancel = () => {
+        promise?.resolve(false); // promise ejecuta el metodo resolve y devuelve false.
+        handleClose();
+    };
 
-    const setModalDialog= (title, message, warning) => {
+    const setModalAcceptDialog = (title, message, warning) => {
         setTitle(title);
         setMessage(message);
         setWarning(warning);
     }
 
-    const ModalDialog = () => (
-        <ModalMessage open={promise !== null} warning={warning} title={title} 
-            message={message} handleAccept={handleAccept} handleClose={handleClose}
+    const ModalAcceptDialog = () => (
+        <ModalDialog open={promise !== null} warning={warning} title={title} message={message}
+            handleAccept={handleAccept} handleCancel={handleCancel} handleClose={handleClose}
         />
     );
-    return [ModalDialog, setModalDialog, acceptDialog];
+    return [ModalAcceptDialog, setModalAcceptDialog, acceptDialog];
 };
 
-export default useModalDialog;
+export default useModalAcceptDialog;

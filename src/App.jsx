@@ -9,12 +9,8 @@ import ModalExpiredLoggin from './components/ModalExpiredLoggin';
 import { useState, useContext, useEffect, useCallback } from 'react';
 import { UserContext } from './context/UserContext';
 import ProtectedRoutes from './components/ProtectedRoutes';
-import ModalMenu from './components/ModalMenu';
-import Productos from './Pages/Productos';
 import ErrorPage from './Pages/ErrorPage';
-import Search from './Pages/Search';
-import AddProduct from './Pages/AddProduct';
-import AddUser from './Pages/AddUser';
+
 import NavbarSticky from './components/NavbarSticky';
 import Register from './Pages/Register'
 import MyAccount from './Pages/MyAccount';
@@ -60,7 +56,6 @@ function App() {
         <Route path='/dashboard' element={<Dashboard user={user}/>} />
 
         {/* <Route path='/editProduct' element={<EditProduct editmode={true}/>} /> */}
-        {/* <Route path='/addUser' element={<AddUser user={user} />} /> */}
         {/* <Route path='/removeUser' element={<RemoveUser user={user} />} /> */}
         <Route path='/myaccount' element={<MyAccount user={user} />} />
       </Route>

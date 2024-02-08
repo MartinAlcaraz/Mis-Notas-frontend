@@ -34,9 +34,8 @@ const useModalDelete = () => {
     }
 
     const ModalDeleteDialog = () => (
-        <ModalDelete open = {promise !== null}
-            title = {title} message = {message}
-            handleConfirm = {handleConfirm} handleCancel = {handleCancel}
+        <ModalDelete open = {promise !== null} title = {title} message = {message}
+            handleConfirm = {handleConfirm} handleCancel = {handleCancel} handleClose={handleClose}
         />
     );
     

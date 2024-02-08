@@ -4,7 +4,6 @@ import useFetch from '../Utils/useFetch';
 import ModalLoading from '../components/ModalLoading';
 import { Button, Card, Typography } from '@material-tailwind/react';
 import Note from '../components/Note';
-import dateformat from 'dateformat';
 
 //Returns an integer random number between min (included) and max (included):
 function randomInteger(min, max) {
@@ -123,9 +122,10 @@ export default function Dashboard({ user = null }) {
                     notes.map(c => {
                         return <Note
                             _id={c._id} title={c.title} description={c.description} key={c._id}
-                            updatedAt={dateformat(c.updatedAt, 'dd/mm/yyyy')} color={colors[2]} refreshNotes={refreshNotes} 
+                            updatedAt={c.noteUpdatedAt} color={colors[2]} refreshNotes={refreshNotes} 
                             scrollToLastNote={scrollToLastNote} setScrollToLastNote={setScrollToLastNote}
                             noteActive={idNoteActive == c._id} setIdNoteActive={setIdNoteActive}
+                            shared={c.shared}
                         />
                     })
                 }
@@ -133,7 +133,7 @@ export default function Dashboard({ user = null }) {
             </div>
             {/* @custom-mq:hidden hide the button if virtual keyboard appears, because the screen height is less than 300px */}
             <div className='sticky left-[85%] bottom-5 text-right inline @custom-mq:hidden'>
-                <Button disabled={loading} onClick={() => addNote()} size='sm' className='p-1 w-10 h-10 rounded-full text-2xl bg-blue-700 shadow-black'>
+                <Button title='Add note' disabled={loading} onClick={() => addNote()} size='sm' className='p-1 w-10 h-10 rounded-full text-2xl bg-blue-700 shadow-black'>
                     +
                 </Button>
             </div>

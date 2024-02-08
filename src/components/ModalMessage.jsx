@@ -4,7 +4,7 @@ import Modal from "./Modal";
 
 const ModalMessage = ({ open, warning = false, title, message, handleAccept, handleClose }) => {
     return (
-        <Modal isOpen={open} showClose={true} close={handleClose} >
+        <Modal isOpen={open} showClose={true} handleCancel={handleClose} >
             <div className="m-auto w-3/4 mt-[20%] md:mt-[10%]">
                 <Card color='blue-gray' className="p-4">
                     <Typography variant='h5' className={` text-center capitalize font-bold`}>{title}</Typography>
@@ -12,7 +12,7 @@ const ModalMessage = ({ open, warning = false, title, message, handleAccept, han
                         {message}
                     </Typography>
                     <div className="w-full text-center">
-                        <button autoFocus className="mx-auto my-4 button-primary py-2 w-2/5 rounded-md" onClick={handleAccept}>Aceptar</button>
+                        <Button autoFocus className="mx-auto my-4 button-primary py-2 w-2/5 rounded-md" onClick={handleAccept}>Aceptar</Button>
                     </div>
                 </Card>
             </div>
