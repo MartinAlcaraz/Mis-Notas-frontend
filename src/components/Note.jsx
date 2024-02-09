@@ -174,17 +174,16 @@ function Note({ _id, title, description, updatedAt, shared, color, refreshNotes,
             {/* Share Icon */}
 
             <div className='w-4 h-4 absolute bottom-1 left-[48%]'>
-                <button className='w-full' onClick={() => shareNoteOnClick(note._id)}>
+                <button className='w-full' onClick={() => shareNoteOnClick(note._id)}>                    
                     {
-                        !noteActive ?
-                            note.shared ?
-                                <img className='w-3 h-3 mx-auto' src={sharedIcon} alt='Shared' title='Shared note' /> :
-                                <></>
+                        note.shared ?
+                            <img className='w-3 h-3 mx-auto' src={sharedIcon} alt='Shared' title='Shared note' />
                             :
-                            note.shared ?
-                                <img className='w-3 h-3 mx-auto' src={sharedIcon} alt='Shared' title='Shared note' /> :
-
+                            noteActive ?
                                 <img className='w-3 h-3 mx-auto' src={notSharedIcon} alt='Not Shared' title='Unshared note' />
+                                :
+                                <></>
+
                     }
                 </button>
             </div>
