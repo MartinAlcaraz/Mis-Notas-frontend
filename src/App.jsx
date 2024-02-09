@@ -14,6 +14,7 @@ import ErrorPage from './Pages/ErrorPage';
 import NavbarSticky from './components/NavbarSticky';
 import Register from './Pages/Register'
 import MyAccount from './Pages/MyAccount';
+import SharedNotes from './Pages/SharedNotes'
 
 function App() {
 
@@ -55,7 +56,7 @@ function App() {
         {/* <Route path='/addProduct' element={<AddProduct />} /> */}
         <Route path='/dashboard' element={<Dashboard user={user}/>} />
 
-        {/* <Route path='/editProduct' element={<EditProduct editmode={true}/>} /> */}
+        <Route path='/sharednotes' element={<SharedNotes user={user}/>} />
         {/* <Route path='/removeUser' element={<RemoveUser user={user} />} /> */}
         <Route path='/myaccount' element={<MyAccount user={user} />} />
       </Route>
@@ -76,7 +77,7 @@ function App() {
   return (
     <ErrorBoundary>
       <BrowserRouter>
-        <div className='h-full w-full bg-white'>
+        <div className='h-full w-full bg-white scrollbar-hide'>
           <div id="portal"></div>
 
           {/* {showModalMenu ? <ModalMenu hideMenu={hideMenu} onLine={onLine} /> : <></>} */}

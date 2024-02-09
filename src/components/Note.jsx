@@ -11,6 +11,7 @@ import useModalAcceptDialog from '../Utils/useModalAcceptDialog.jsx';
 import dateformat from 'dateformat';
 
 function Note({ _id, title, description, updatedAt, shared, color, refreshNotes, noteActive, setIdNoteActive }) {
+    
     const [errorMessage, loading, sendHttpRequest] = useFetch();
     const [note, setNote] = useState({ _id, title, description, updatedAt: dateformat(updatedAt, 'dd/mm/yyyy'), shared });
     const [prevNote, setPrevNote] = useState({});
@@ -26,8 +27,9 @@ function Note({ _id, title, description, updatedAt, shared, color, refreshNotes,
     const animationChechWithVanish = 'svg-color-blue block vanish opacity-0'; // + vanish
     const [animationCheck, setAnimationCheck] = useState(animationChechWithoutVanish);
 
-    const classCardInactive = `transition duration-300 w-4/5 max-w-[240px] h-60 text-gray-900 shadow-black p-4 ${color} relative card`;
-    const classCardActive = `transition scale-125 duration-300 w-4/5 max-w-[240px] h-60 text-gray-900 shadow-black p-4 ${color} relative card`;
+    const classCard = 'transition duration-300 w-4/5 max-w-[240px] h-60 text-gray-900 shadow-black p-4 pt-5 relative card-textured-green ';
+    const classCardInactive = classCard;
+    const classCardActive = classCard + ` scale-125 `;
 
     const navigate = useNavigate();
     const cardRef = useRef();
@@ -161,12 +163,12 @@ function Note({ _id, title, description, updatedAt, shared, color, refreshNotes,
             </div>
 
             <input type="text" name='title'
-                className="bg-inherit focus:outline-none font-Lora font-bold text-2xl scrollbar-hide pb-2 disabled:bg-inherit"
+                className="bg-transparent focus:outline-none font-Lora font-bold text-2xl scrollbar-hide pb-2 disabled:bg-inherit"
                 value={note.title} onChange={e => setNote({ ...note, title: e.currentTarget.value })}
                 maxLength={50} />
 
             <textarea name="description"
-                className="h-full resize-none bg-inherit focus:outline-none font-Lora leading-5 focus:leading-5 text-base focus:text-base overflow-y-hidden focus:overflow-scroll scrollbar-hide disabled:bg-inherit"
+                className="h-full resize-none bg-transparent focus:outline-none font-Lora leading-5 focus:leading-5 text-base focus:text-base overflow-y-hidden focus:overflow-scroll scrollbar-hide disabled:bg-inherit"
                 value={note.description} onChange={e => setNote({ ...note, description: e.currentTarget.value })}
                 maxLength={2000}
             />
@@ -183,7 +185,6 @@ function Note({ _id, title, description, updatedAt, shared, color, refreshNotes,
                                 <img className='w-3 h-3 mx-auto' src={notSharedIcon} alt='Not Shared' title='Unshared note' />
                                 :
                                 <></>
-
                     }
                 </button>
             </div>

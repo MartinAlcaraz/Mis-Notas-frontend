@@ -66,21 +66,48 @@
   --ligth-gray: #e6e6e6;
 }
 
-.padre{
+.padre {
   height: auto;
 }
 
-.vanish{
+.card-textured-green {
+  background-image: url('./assets/img-noise.png');
+  background-repeat: repeat;
+  background-color: rgba(33, 148, 58, 0.83);
+}
+
+.card-textured-yellow {
+  background-image: url('./assets/img-noise.png');
+  background-repeat: repeat;
+  background-color: rgba(180, 189, 54, 0.9);
+}
+
+.vanish {
   animation-name: vanishing;
   animation-duration: 4s;
   animation-delay: 0s;
 }
 
-@keyframes vanishing{
-  0%{ opacity: 1; transform: scale(0.7); }
-  50%{ opacity: 1; transform: scale(1); }
-  90%{ opacity: 1; transform: scale(1); }
-  100%{ opacity: 0.8; transform: scale(0); }
+@keyframes vanishing {
+  0% {
+    opacity: 1;
+    transform: scale(0.7);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  90% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0.8;
+    transform: scale(0);
+  }
 }
 
 /* loading tipo . .. ... ....  
@@ -90,12 +117,14 @@
   display: block;
   white-space: nowrap;
   width: 30px;
-  animation: typing 2s steps(4) infinite; 
+  animation: typing 2s steps(4) infinite;
   overflow: hidden;
 }
 
 @keyframes typing {
-  from {width: 7px }
+  from {
+    width: 7px
+  }
 }
 
 p,
@@ -113,7 +142,7 @@ h3 {
 .entrada-1:-webkit-autofill:hover,
 .entrada-1:-webkit-autofill:focus {
   -webkit-text-fill-color: rgb(244, 244, 244);
-  -webkit-box-shadow: 0 0 0px 1000px rgba(0,0,0,0) inset;
+  -webkit-box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0) inset;
   transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -141,8 +170,12 @@ h3 {
   color: #FF0000;
 }
 
-.svg-color-blue{
+.svg-color-blue {
   filter: invert(14%) sepia(99%) saturate(3944%) hue-rotate(195deg) brightness(91%) contrast(99%);
+}
+
+.svg-color-white {
+  filter: invert(100%) sepia(6%) saturate(0%) hue-rotate(314deg) brightness(104%) contrast(108%);
 }
 
 textarea,

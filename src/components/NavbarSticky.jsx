@@ -21,7 +21,7 @@ export default function NavbarSticky({ user, setUnloggedUser }) {
     );
   }, []);
 
-  
+
   // to show or hide navbar in scroll
   const handleScroll = () => {
     // only hide the navbar when the windows heigth is less than 560px
@@ -34,7 +34,7 @@ export default function NavbarSticky({ user, setUnloggedUser }) {
         setVisible(true);
       }
       setPrevScrollPos(currentScrollPos);
-    }else{
+    } else {
       setVisible(true);
     }
   }
@@ -56,26 +56,19 @@ export default function NavbarSticky({ user, setUnloggedUser }) {
 
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 md:mb-0 md:mt-0 md:flex-row md:items-center md:gap-6">
+
       <Typography as="li" variant="small" color="blue-gray" className="p-1 font-normal">
-        <a href="#" className="flex items-center">
-          Pages
-        </a>
+        <Link to="/dashboard" className="flex items-center" onMouseDown={() => navigate("/dashboard")}>
+          My notes
+        </Link>
       </Typography>
+
       <Typography as="li" variant="small" color="blue-gray" className="p-1 font-normal">
-        <a href="#" className="flex items-center">
-          Account
-        </a>
+        <Link to="/sharednotes" className="flex items-center" onMouseDown={() => navigate("/sharednotes")}>
+          Shared Notes
+        </Link>
       </Typography>
-      <Typography as="li" variant="small" color="blue-gray" className="p-1 font-normal">
-        <a href="#" className="flex items-center">
-          Blocks
-        </a>
-      </Typography>
-      <Typography as="li" variant="small" color="blue-gray" className="p-1 font-normal">
-        <a href="#" className="flex items-center">
-          Docs
-        </a>
-      </Typography>
+
     </ul>
   );
 
@@ -129,7 +122,7 @@ export default function NavbarSticky({ user, setUnloggedUser }) {
                           </Link>
                         </Typography>
                         <Typography as="li" variant="small" color="blue-gray" className="p-1 font-normal">
-                          <Link to="/" onClick={() => logout() } className="flex items-center hover:text-black active:text-blue-700">
+                          <Link to="/" onClick={() => logout()} className="flex items-center hover:text-black active:text-blue-700">
                             Salir
                           </Link>
                         </Typography>
@@ -220,7 +213,7 @@ export default function NavbarSticky({ user, setUnloggedUser }) {
                   </Typography>
                   <Typography as="li" variant="small" color="blue-gray" className="p-1 font-normal">
                     <Link to="/" className="flex items-center hover:text-black active:text-blue-700"
-                      onMouseDown={() => logout() }
+                      onMouseDown={() => logout()}
                     >
                       Salir
                     </Link>
