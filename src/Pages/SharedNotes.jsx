@@ -73,22 +73,22 @@ export default function Dashboard({ user = null }) {
     }
 
     const onClickHandler = (e) => {
-        // console.log(e.currentTarget); // elemento en el que ocurre el evento <main>
-        // console.log(e.target); // elemento clickaedo en <main>, <div> o <card>
+        // console.log(e.currentTarget.getAttribute('name')); // elemento en el que ocurre el evento <main>
+        // console.log(e.target.getAttribute('name')); // elemento clickaedo en <main>, <h2> <div> o <card>
 
         // setea cardActive en null si se clickea fuera de la nota
-        if (e.target == e.currentTarget) {
+        let element = e.target.getAttribute('name');
+        if ( element == "main-title" || element == "main-container") {
             setIdNoteActive(null);
         }
     }
 
     return (
-        <main className='bg-primary min-h-screen relative pb-2'>
-            <div className='h-8 md:h-12'/>
-            <Typography as="h2" className="text-white text-center text-lg font-semibold leading-10 md:leading-[50px]">
+        <main className='bg-primary min-h-screen relative py-8 md:py-12' onClick={e => onClickHandler(e)}>
+            <Typography name="main-title" as="h2" className="text-white text-center text-lg font-semibold leading-10 md:leading-[50px]">
                 Shared Notes <img src={sharedIcon} className='inline svg-color-white'/>
             </Typography>
-            <div onClick={e => onClickHandler(e)} className='flex flex-wrap justify-center gap-10 md:gap-14 min-h-[100vh] px-4 py-16 md:py-20'>
+            <div name="main-container" className='flex flex-wrap justify-center gap-10 md:gap-14 min-h-[100vh] px-4 py-16 md:py-20'>
                 {
                     loading ? <ModalLoading /> : <></>
                 }

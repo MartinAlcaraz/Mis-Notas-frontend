@@ -57,15 +57,32 @@ export default function NavbarSticky({ user, setUnloggedUser }) {
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 md:mb-0 md:mt-0 md:flex-row md:items-center md:gap-6">
 
+      {
+        user.isLogged ? <>
+          <Typography as="li" variant="small" color="blue-gray" className="p-1 font-normal">
+            <Link to="/dashboard" className="flex items-center" onMouseDown={() => navigate("/dashboard")}>
+              My notes
+            </Link>
+          </Typography>
+
+          <Typography as="li" variant="small" color="blue-gray" className="p-1 font-normal">
+            <Link to="/sharednotes" className="flex items-center" onMouseDown={() => navigate("/sharednotes")}>
+              Shared Notes
+            </Link>
+          </Typography>
+        </>
+          :
+          <></>
+      }
       <Typography as="li" variant="small" color="blue-gray" className="p-1 font-normal">
-        <Link to="/dashboard" className="flex items-center" onMouseDown={() => navigate("/dashboard")}>
-          My notes
+        <Link to="/about" className="flex items-center" onMouseDown={() => navigate("/about")}>
+          About
         </Link>
       </Typography>
 
       <Typography as="li" variant="small" color="blue-gray" className="p-1 font-normal">
-        <Link to="/sharednotes" className="flex items-center" onMouseDown={() => navigate("/sharednotes")}>
-          Shared Notes
+        <Link to="/documentation" className="flex items-center" onMouseDown={() => navigate("/documentation")}>
+          Docs
         </Link>
       </Typography>
 
@@ -198,7 +215,9 @@ export default function NavbarSticky({ user, setUnloggedUser }) {
 
       <MobileNav open={openNav}>
         <div >
-          {navList}
+          {
+            navList
+          }
 
           <div className="">
             {

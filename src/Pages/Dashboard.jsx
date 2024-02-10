@@ -4,6 +4,7 @@ import useFetch from '../Utils/useFetch';
 import ModalLoading from '../components/ModalLoading';
 import { Button, Card, Typography } from '@material-tailwind/react';
 import Note from '../components/Note';
+import noteIcon from '../icons/note.svg'
 
 //Returns an integer random number between min (included) and max (included):
 function randomInteger(min, max) {
@@ -55,12 +56,12 @@ export default function Dashboard({ user = null }) {
     useEffect(() => {
         // si se crea una nota nueva se desplaza la pantalla hasta la nota nueva
         if (scrollToLastNote) {
-            const newNote= document.getElementById(notes[notes.length-1]._id);
+            const newNote = document.getElementById(notes[notes.length - 1]._id);
             const y = newNote.getBoundingClientRect().top + window.scrollY - (window.innerHeight / 4);
             window.scroll({
                 top: y,
                 behavior: 'smooth'
-            });            
+            });
 
             setScrollToLastNote(false);
         }
@@ -74,12 +75,12 @@ export default function Dashboard({ user = null }) {
     function createNoteHandler(res, data) {
         if (res.status == 201) {
             console.log('Note created.')
-            setNotes(()=> [...notes, data.data.newNote]);
+            setNotes(() => [...notes, data.data.newNote]);
 
             setIdNoteActive(data.data.newNote._id);
 
             // cuando termina de re-renderizarse el componente, se desplaza la pantalla hasta la nueva nota.
-            setScrollToLastNote(true);            
+            setScrollToLastNote(true);
 
         } else {
             console.log('Failed to create note.')
@@ -103,18 +104,22 @@ export default function Dashboard({ user = null }) {
     }
 
     const onClickHandler = (e) => {
-        // console.log(e.currentTarget); // elemento en el que ocurre el evento <main>
-        // console.log(e.target); // elemento clickaedo en <main>, <div> o <card>
+        // console.log(e.currentTarget.getAttribute('name')); // elemento en el que ocurre el evento <main>
+        // console.log(e.target.getAttribute('name')); // elemento clickaedo en <main>, <h2> <div> o <card>
 
         // setea cardActive en null si se clickea fuera de la nota
-        if (e.target == e.currentTarget) {
+        let element = e.target.getAttribute('name');
+        if ( element == "main-title" || element == "main-container") {
             setIdNoteActive(null);
         }
     }
 
     return (
-        <main className='bg-primary min-h-screen relative pb-2'>
-            <div onClick={e => onClickHandler(e)} className='flex flex-wrap justify-center gap-10 md:gap-14 min-h-[100vh] px-4 py-16 md:py-20'>
+        <main className='bg-primary min-h-screen relative py-8 md:py-12' onClick={e => onClickHandler(e)}>
+            <Typography name="main-title" as="h2" className=" text-white text-center text-lg font-semibold leading-10 md:leading-[50px]">
+                My Notes <img src={noteIcon} className='inline svg-color-white' />
+            </Typography>
+            <div name="main-container"  className='flex flex-wrap justify-center gap-10 md:gap-14 min-h-[100vh] px-4 py-14 md:py-20'>
                 {
                     loading ? <ModalLoading /> : <></>
                 }
@@ -122,7 +127,7 @@ export default function Dashboard({ user = null }) {
                     notes.map(c => {
                         return <Note
                             _id={c._id} title={c.title} description={c.description} key={c._id}
-                            updatedAt={c.noteUpdatedAt} color={colors[2]} refreshNotes={refreshNotes} 
+                            updatedAt={c.noteUpdatedAt} color={colors[2]} refreshNotes={refreshNotes}
                             scrollToLastNote={scrollToLastNote} setScrollToLastNote={setScrollToLastNote}
                             noteActive={idNoteActive == c._id} setIdNoteActive={setIdNoteActive}
                             shared={c.shared}
