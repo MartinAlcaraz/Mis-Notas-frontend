@@ -96,6 +96,7 @@ function NotePublic({ _id, title, description, updatedAt, shared, noteActive, se
             {/* Share Icon */}
 
             <div className='w-4 h-4 absolute bottom-1 left-[48%]'>
+                <div className={`absolute -top-6 ${note._id == 2 ? ' block animate-bounce ' : ' hidden '}`}>👇</div>
                 <button className='w-full' onClick={() => shareNoteOnClick(note._id)}>                    
                     {
                         note.shared ?

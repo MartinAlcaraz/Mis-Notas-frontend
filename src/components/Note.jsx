@@ -27,7 +27,7 @@ function Note({ _id, title, description, updatedAt, shared, color, refreshNotes,
     const animationChechWithVanish = 'svg-color-blue block vanish opacity-0'; // + vanish
     const [animationCheck, setAnimationCheck] = useState(animationChechWithoutVanish);
 
-    const classCard = 'transition duration-300 w-4/5 max-w-[240px] h-60 text-gray-900 shadow-black p-4 pt-5 relative card-textured-green ';
+    const classCard = `transition duration-300 w-4/5 max-w-[240px] h-60 text-gray-900 shadow-black p-4 pt-5 relative card-textured-green `;
     const classCardInactive = classCard;
     const classCardActive = classCard + ` scale-125 `;
 

@@ -61,13 +61,13 @@ export default function NavbarSticky({ user, setUnloggedUser }) {
         user.isLogged ? <>
           <Typography as="li" variant="small" color="blue-gray" className="p-1 font-normal">
             <Link to="/dashboard" className="flex items-center" onMouseDown={() => navigate("/dashboard")}>
-              My notes
+              Mis Notas
             </Link>
           </Typography>
 
           <Typography as="li" variant="small" color="blue-gray" className="p-1 font-normal">
             <Link to="/sharednotes" className="flex items-center" onMouseDown={() => navigate("/sharednotes")}>
-              Shared Notes
+              Notas Compartidas
             </Link>
           </Typography>
         </>

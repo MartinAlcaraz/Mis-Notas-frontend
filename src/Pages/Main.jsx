@@ -4,9 +4,9 @@ import noteIcon from '../icons/note.svg'
 import NotePublic from '../components/NotePublic';
 
 const defaultNotes = [
-    { _id: 1, title: "Crea tus notas", shared: false, noteUpdatedAt: '1/2/2024', description: "Agrega el contenido de tu nota" },
-    { _id: 2, title: "Comparte tus notas", shared: true, noteUpdatedAt: '2/2/2024', description: "Comparte las notas que quieras con todos usuarios" },
-    { _id: 3, title: "Registrate", shared: false, noteUpdatedAt: '3/2/2024', description: "Registrate y crea tus notas" },
+    { _id: 1, title: "Crea tus notas", shared: false, noteUpdatedAt: '1/2/2024', description: "Agrega el contenido de tu nota." },
+    { _id: 2, title: "Comparte tus notas", shared: true, noteUpdatedAt: '2/2/2024', description: "Comparte las notas que quieras con todos los usuarios." },
+    { _id: 3, title: "Registrate", shared: false, noteUpdatedAt: '3/2/2024', description: "Registrate y crea tus notas." },
 ]
 
 //Returns an integer random number between min (included) and max (included):
@@ -89,7 +89,7 @@ function Main({ user = null }) {
     return (
         <main className='bg-primary min-h-screen relative py-8 md:py-12' onClick={e => onClickHandler(e)}>
             <Typography name="main-title" as="h2" className=" text-white text-center text-lg font-semibold leading-10 md:leading-[50px]">
-                Notes <img src={noteIcon} className='inline svg-color-white' />
+                <img src={noteIcon} className='inline svg-color-white' />
             </Typography>
             <div name="main-container" className='flex flex-wrap justify-center gap-10 md:gap-14 min-h-[100vh] px-4 py-14 md:py-20'>
                 {/* {

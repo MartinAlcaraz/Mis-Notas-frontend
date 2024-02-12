@@ -13,10 +13,8 @@ function randomInteger(min, max) {
 
 
 const colors = [
-    "bg-blue-700",
-    "bg-deep-orange-800",
-    "bg-green-600",
-    "bg-yellow-700"
+    " card-textured-green ",
+    " card-textured-yellow "
 ]
 
 export default function Dashboard({ user = null }) {
@@ -109,7 +107,7 @@ export default function Dashboard({ user = null }) {
 
         // setea cardActive en null si se clickea fuera de la nota
         let element = e.target.getAttribute('name');
-        if ( element == "main-title" || element == "main-container") {
+        if (element == "main-title" || element == "main-container") {
             setIdNoteActive(null);
         }
     }
@@ -117,17 +115,17 @@ export default function Dashboard({ user = null }) {
     return (
         <main className='bg-primary min-h-screen relative py-8 md:py-12' onClick={e => onClickHandler(e)}>
             <Typography name="main-title" as="h2" className=" text-white text-center text-lg font-semibold leading-10 md:leading-[50px]">
-                My Notes <img src={noteIcon} className='inline svg-color-white' />
+                Mis Notas <img src={noteIcon} className='inline svg-color-white' />
             </Typography>
-            <div name="main-container"  className='flex flex-wrap justify-center gap-10 md:gap-14 min-h-[100vh] px-4 py-14 md:py-20'>
+            <div name="main-container" className='flex flex-wrap justify-center gap-10 md:gap-14 min-h-[100vh] px-4 py-14 md:py-20 '>
                 {
                     loading ? <ModalLoading /> : <></>
                 }
                 {
-                    notes.map(c => {
+                    notes.map((c) => {
                         return <Note
                             _id={c._id} title={c.title} description={c.description} key={c._id}
-                            updatedAt={c.noteUpdatedAt} color={colors[2]} refreshNotes={refreshNotes}
+                            updatedAt={c.noteUpdatedAt} refreshNotes={refreshNotes}
                             scrollToLastNote={scrollToLastNote} setScrollToLastNote={setScrollToLastNote}
                             noteActive={idNoteActive == c._id} setIdNoteActive={setIdNoteActive}
                             shared={c.shared}

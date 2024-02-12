@@ -7,19 +7,7 @@ import NoteShared from '../components/NoteShared';
 import { Typography } from '@material-tailwind/react';
 import sharedIcon from '../icons/sharedIcon.svg'
 
-//Returns an integer random number between min (included) and max (included):
-function randomInteger(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-const colors = [
-    "bg-blue-700",
-    "bg-deep-orange-800",
-    "bg-green-600",
-    "bg-yellow-700"
-]
-
-export default function Dashboard({ user = null }) {
+export default function SharedNotes({ user = null }) {
 
     const [sharedNotes, setSharedNotes] = useState([]);
     const [errorMessage, loading, sendHttpRequest] = useFetch();
@@ -86,7 +74,7 @@ export default function Dashboard({ user = null }) {
     return (
         <main className='bg-primary min-h-screen relative py-8 md:py-12' onClick={e => onClickHandler(e)}>
             <Typography name="main-title" as="h2" className="text-white text-center text-lg font-semibold leading-10 md:leading-[50px]">
-                Shared Notes <img src={sharedIcon} className='inline svg-color-white'/>
+                Notas compartidas <img src={sharedIcon} className='inline svg-color-white'/>
             </Typography>
             <div name="main-container" className='flex flex-wrap justify-center gap-10 md:gap-14 min-h-[100vh] px-4 py-16 md:py-20'>
                 {
