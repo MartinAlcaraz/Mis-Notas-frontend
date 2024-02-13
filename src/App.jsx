@@ -15,6 +15,7 @@ import NavbarSticky from './components/NavbarSticky';
 import Register from './Pages/Register'
 import MyAccount from './Pages/MyAccount';
 import SharedNotes from './Pages/SharedNotes'
+import About from './Pages/About';
 
 function App() {
 
@@ -43,7 +44,7 @@ function App() {
     <Routes>
       <Route path='/' element={user.isLogged ? <Navigate to="/dashboard" replace/> : <Main user={user} />  }/>
 
-      {/* <Route path='/search' element={<Search />} /> */}
+      <Route path='/about' element={<About />} />
 
       <Route path='/login' element={<Login />} />
       <Route path='/signup' element={<Register />} />

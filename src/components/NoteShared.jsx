@@ -3,7 +3,7 @@ import { Card } from '@material-tailwind/react';
 import sharedIcon from '../icons/sharedIcon.svg';
 import dateformat from 'dateformat';
 
-function NoteShared({ _id, title, description, updatedAt, shared, color, noteActive, setIdNoteActive }) {
+function NoteShared({ _id, title, description, updatedAt, shared, noteActive, setIdNoteActive }) {
 
     const [note, setNote] = useState({ _id, title, description, updatedAt: dateformat(updatedAt, 'dd/mm/yyyy'), shared });
 

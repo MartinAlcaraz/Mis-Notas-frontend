@@ -80,11 +80,11 @@ export default function NavbarSticky({ user, setUnloggedUser }) {
         </Link>
       </Typography>
 
-      <Typography as="li" variant="small" color="blue-gray" className="p-1 font-normal">
+      {/* <Typography as="li" variant="small" color="blue-gray" className="p-1 font-normal">
         <Link to="/documentation" className="flex items-center" onMouseDown={() => navigate("/documentation")}>
           Docs
         </Link>
-      </Typography>
+      </Typography> */}
 
     </ul>
   );

@@ -38,6 +38,7 @@ const Register = () => {
 
     const onsubmit = async (data, e) => {
         // const formData = new FormData()        // formData.append('userName', data.nombre);        // formData.append('password', data.password);
+        
         const formData = {
             "username": data.nombre,
             "email": data.email,

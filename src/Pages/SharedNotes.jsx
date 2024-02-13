@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useFetch from '../Utils/useFetch';
 import ModalLoading from '../components/ModalLoading';
-// import { Button, Card, Typography } from '@material-tailwind/react';
 import NoteShared from '../components/NoteShared';
 import { Typography } from '@material-tailwind/react';
 import sharedIcon from '../icons/sharedIcon.svg'
@@ -84,7 +83,7 @@ export default function SharedNotes({ user = null }) {
                     sharedNotes.map(c => {
                         return <NoteShared
                             _id={c._id} title={c.title} description={c.description} key={c._id}
-                            updatedAt={c.noteUpdatedAt} color={colors[2]} 
+                            updatedAt={c.noteUpdatedAt} 
                             noteActive={idNoteActive == c._id} setIdNoteActive={setIdNoteActive}
                             shared={c.shared}
                         />
