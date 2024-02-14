@@ -23,6 +23,8 @@ Pagina web : https://mis-notas-frontend.onrender.com/
 
 ## Demo
 
+https://github.com/MartinAlcaraz/Mis-Notas-frontend/assets/96241107/dbf198d5-abed-42c6-80d0-92c012bc08b8
+
 
 
 
