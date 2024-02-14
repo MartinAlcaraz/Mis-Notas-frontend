@@ -21,4 +21,6 @@ Pagina web : https://mis-notas-frontend.onrender.com/
 
 ## Demo
 <p>video demostracion de la app</p>
-<!-- https://github.com/MartinAlcaraz/RestorantVladimir-frontEnd/assets/96241107/44b3745b-5d39-4529-a896-17afe0a8ff88 -->
+<div>
+https://github.com/MartinAlcaraz/Mis-Notas-frontend/blob/master/src/assets/mis-notas%20demo.mp4
+</div>
