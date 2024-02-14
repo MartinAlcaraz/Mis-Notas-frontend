@@ -5,21 +5,19 @@
 
 Aplicacion web para guardar y compartir notas.
 
-Pagina web : https://
+Pagina web : https://mis-notas-frontend.onrender.com/
 
 ## Tecnologias utilizadas 🛠️
 ---
-- ReactJs
-- NodeJs
-- Express
-- MongoDB
+- React Js
 - Tailwind-CSS
 - ViteJs
 
 ## Detalles de la app:
-- Las notas se guardan solas cuando se saca el foco de la nota esccrita.
+- Las notas se guardan solas cuando se saca el foco de la nota enfocada.
 - Cada cambio en la nota se guarda automaticamente cuando la nota pierde el foco.
-- Se puede compartir notas sin abrir la sesion del usuario, o en la pestaña Notas         Compartidas.
+- Se puede compartir las notas activando el icon de compartir, en cada nota.
+- Las notas compartidas se muestran en la pagina Notas Compartidas.
 
 ## Demo
 <p>video demostracion de la app</p>

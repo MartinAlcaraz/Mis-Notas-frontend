@@ -52,6 +52,8 @@ function Note({ _id, title, description, updatedAt, shared, color, refreshNotes,
             setNote({ ...note, updatedAt: dateformat(data.data.newNote.noteUpdatedAt, 'dd/mm/yyyy') });
             setSavingText(false);
         } else {
+            console.log(res.status)
+            console.log(res.data)
             navigate('/error');
         }
     }
@@ -74,17 +76,19 @@ function Note({ _id, title, description, updatedAt, shared, color, refreshNotes,
             //update note
             // solo se actualiza el elemento que ha sido modificado. Title o description.
             setSavingText(true);
+
             sendHttpRequest(`/api/notes/${note._id}`, 'PUT', { [element]: newContent }, updateNoteHandler);
-        } else {
-            // console.log(`El ${element} no cambió.`);
-        }
+        } 
+        // else {
+        //     console.log(`El ${element} no cambió.`);
+        // }
 
     }
 
     function deleteNoteHandler(res, data) {
         if (res.status == 200) {
             // if ok, refresh note list
-            refreshNotes(data.data.deletedNote._id);
+            refreshNotes(note._id);
         } else {
             // console.log(data.message);
             navigate('/error');
