@@ -22,10 +22,5 @@ Pagina web : https://mis-notas-frontend.onrender.com/
 - Las notas compartidas se muestran en la pagina Notas Compartidas.
 
 ## Demo
-
-https://github.com/MartinAlcaraz/Mis-Notas-frontend/assets/96241107/dbf198d5-abed-42c6-80d0-92c012bc08b8
-
-
-
-
+https://github.com/MartinAlcaraz/Mis-Notas-frontend/assets/96241107/3a925303-f373-46eb-a383-3cb4b65829f4
 
